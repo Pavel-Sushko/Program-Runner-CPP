@@ -27,6 +27,30 @@ std::string get_executable_path(std::string programPath)
 
             executablePath += programPath;
         }
+        else
+        {
+            // Count the amount of "../" in the path
+            int count = 0;
+
+            while (programPath.find("../") != std::string::npos)
+            {
+                programPath.erase(programPath.find("../"), 3);
+                count++;
+            }
+
+            std::cout << "Count: " << count << std::endl;
+
+            // Remove the last count amount of directories from the path
+            for (int i = 0; i < count; i++)
+            {
+                executablePath.erase(executablePath.find_last_of("/"), executablePath.length());
+            }
+
+            std::cout << "Executable path: " << executablePath << std::endl;
+
+            std::cout << "Error: Invalid path" << std::endl;
+            exit(1);
+        }
     }
 
     return executablePath;
@@ -77,21 +101,7 @@ std::string make_command(json program)
     command.append(get_executable_path(program["path"]));
     // command.append(program["args"]);
 
-    if (programPath.find("../"))
-    {
-        // Split the directory from the program name
-        std::string programDirectory = programPath.substr(0, programPath.find_last_of("/\\"));
-        std::string programName = programPath.substr(programPath.find_last_of("/\\") + 1);
-
-        // Get the current directory
-        std::string currentDirectory = std::filesystem::current_path();
-
-        // Go up the directory tree the amount of times "../" appears in the program path
-        for (int i = 0; i < std::count(programPath.begin(), programPath.end(), '.'); i++)
-        {
-            currentDirectory = currentDirectory.substr(0, currentDirectory.find_last_of("/\\"));
-        }
-    }
+    std::cout << command << std::endl;
 
     return command;
 }
