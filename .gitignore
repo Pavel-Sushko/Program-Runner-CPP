@@ -40,6 +40,6 @@ main
 
 # Template files
 path/
-.file_of_env_variables.env
+file_of_env_variables.env
 
 RoadMap.md
