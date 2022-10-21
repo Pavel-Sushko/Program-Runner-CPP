@@ -9,6 +9,6 @@
             "ENV_VARIABLE_NAME": "value"
         },
         "envFile": "./file_of_env_variables.env",
-        "runDirectory": "/path/to/run/directory"
+        "runDirectory": "./path/to/run/directory"
     }
 ]
