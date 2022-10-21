@@ -71,13 +71,11 @@ std::string make_command(json program)
 
         std::cin.ignore();
 
-        return 1;
+        exit(1);
     }
 
     command.append(get_executable_path(program["path"]));
     // command.append(program["args"]);
-
-    system(command.c_str());
 
     if (programPath.find("../"))
     {
@@ -95,13 +93,14 @@ std::string make_command(json program)
         }
     }
 
-    return 0;
+    return command;
 }
 
 int run_programs(json programs)
 {
     for (int i = 0; i < programs.size(); i++)
     {
+        system(make_command(programs[i]).c_str());
     }
 
     return 0;
