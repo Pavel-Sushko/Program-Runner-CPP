@@ -38,5 +38,7 @@ main
 # Local configuration files
 .vscode/
 
-# 
+# Template files
+./path
+
 RoadMap.md
