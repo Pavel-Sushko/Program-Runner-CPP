@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Program Name",
+        "path": "./ProgramExecutable.py",
+        "args": [
+            "-list of, args"
+        ],
+        "env": {
+            "ENV_VARIABLE_NAME": "value"
+        },
+        "envFile": "./file_of_env_variables.env",
+        "runDirectory": "/path/to/run/directory"
+    }
+]

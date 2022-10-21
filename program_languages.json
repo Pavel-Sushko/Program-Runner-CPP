@@ -1,0 +1,16 @@
+[
+    {
+        "name": "Python",
+        "extensions": [
+            ".py"
+        ],
+        "command": "python"
+    },
+    {
+        "name": "PowerShell",
+        "extenstions": [
+            ".ps1"
+        ],
+        "command": ""
+    }
+]
