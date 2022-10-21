@@ -39,6 +39,7 @@ main
 .vscode/
 
 # Template files
-./path
+path/
+.file_of_env_variables.env
 
 RoadMap.md
