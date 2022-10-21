@@ -85,9 +85,9 @@ int run_programs(json programs)
     return 0;
 }
 
-json load_programming_languages(std::string)
+json load_programming_languages(std::string);
 
-    int main()
+int main()
 {
     run_programs(read_json_file("programs.json"));
 
