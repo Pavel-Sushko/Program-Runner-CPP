@@ -4,13 +4,31 @@
         "extensions": [
             ".py"
         ],
-        "command": "python"
+        "command": "python",
+        "os": [ "linux", "windows", "osx" ]
     },
     {
         "name": "PowerShell",
         "extenstions": [
             ".ps1"
         ],
-        "command": ""
+        "command": "",
+        "os": [ "windows" ]
+    },
+    {
+        "name": "Windows Executable",
+        "extensions": [
+            ".exe"
+        ],
+        "command": "",
+        "os": [ "windows" ]
+    },
+    {
+        "name": "Linux Executable",
+        "extensions": [
+            ""
+        ],
+        "command": "",
+        "os": [ "linux" ]
     }
 ]
