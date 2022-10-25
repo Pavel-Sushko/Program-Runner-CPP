@@ -3,7 +3,8 @@
         "name": "Program Name",
         "path": "./ProgramExecutable.py",
         "args": [
-            "-list of, args"
+            "--list of, args",
+            "--more args"
         ],
         "env": {
             "ENV_VARIABLE_NAME": "value"
