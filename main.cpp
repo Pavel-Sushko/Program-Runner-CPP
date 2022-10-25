@@ -1,3 +1,14 @@
+/**
+ * @file main.cpp
+ * @author Pavel Sushko (psushko@ville.kirkland.qc.ca)
+ *                      (psushko@sbsoftware.ca)
+ * @brief
+ * @version 1.0
+ * @date 2022-10-25
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #include <fstream>
 #include <iostream>
 #include <filesystem>
@@ -5,6 +16,12 @@
 
 using json = nlohmann::json;
 
+/**
+ * @brief Reads a json file and create an object from it
+ *
+ * @param filename - name of the file to read
+ * @return json - object created from the file
+ */
 json read_json_file(const std::string &filename)
 {
     std::ifstream file(filename);
@@ -14,7 +31,13 @@ json read_json_file(const std::string &filename)
     return j;
 }
 
-std::string get_executable_path(std::string programPath)
+/**
+ * @brief Get the absolute executable path object
+ *
+ * @param programPath - path to the executable
+ * @return std::string - absolute path to the executable
+ */
+std::string get_absolute_executable_path(std::string programPath)
 {
     std::string executablePath = std::filesystem::current_path().string() + "/";
     int pos = programPath.find("./");
@@ -56,6 +79,12 @@ std::string get_executable_path(std::string programPath)
     return executablePath;
 }
 
+/**
+ * @brief Get the args object
+ *
+ * @param program - program object from which to build the command line arguments
+ * @return std::string - command line arguments
+ */
 std::string get_args(json program)
 {
     std::string args = "";
@@ -69,6 +98,12 @@ std::string get_args(json program)
     return args;
 }
 
+/**
+ * @brief Creates a command line string from the program object
+ *
+ * @param program - program object from which to build the command line string
+ * @return std::string - command line string
+ */
 std::string make_command(json program)
 {
     std::string runDirectory = program["runDirectory"];
@@ -111,7 +146,7 @@ std::string make_command(json program)
         exit(1);
     }
 
-    command.append(get_executable_path(program["path"]));
+    command.append(get_absolute_executable_path(program["path"]));
     command.append(" ");
     command.append(get_args(program));
 
@@ -120,6 +155,12 @@ std::string make_command(json program)
     return command;
 }
 
+/**
+ * @brief Runs programs from a json file
+ *
+ * @param programs - json object containing the programs to run
+ * @return int - exit code
+ */
 int run_programs(json programs)
 {
     for (int i = 0; i < programs.size(); i++)
@@ -132,7 +173,10 @@ int run_programs(json programs)
 
 int main()
 {
-    run_programs(read_json_file("programs.json"));
+    if (!run_programs(read_json_file("programs.json")))
+    {
+        return 0;
+    }
 
-    return 0;
+    return 1;
 }
