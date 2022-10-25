@@ -26,9 +26,29 @@ json read_json_file(const std::string &filename)
 {
     std::ifstream file(filename);
     json j;
+
     file >> j;
 
     return j;
+}
+
+/**
+ * @brief Get the directory from which to run the program
+ *
+ * @param program - program object from which to get the run directory
+ * @return std::string
+ */
+std::string get_run_directory(json program)
+{
+    std::string runDirectory = program["runDirectory"];
+
+    // If the runDirectory is empty, then use the current directory
+    if (runDirectory == "")
+    {
+        runDirectory = "./";
+    }
+
+    return runDirectory;
 }
 
 /**
@@ -42,8 +62,11 @@ std::string get_absolute_executable_path(std::string programPath)
     std::string executablePath = std::filesystem::current_path().string() + "/";
     int pos = programPath.find("./");
 
+    // If the program path is relative, then turn it into an absolute path
     if (pos != std::string::npos)
     {
+        // If no ../ is found, then we can simply remove the ./ from the path, and prepend the current path
+        // to it.
         if (programPath.find("../") == std::string::npos)
         {
             programPath.erase(pos, 2);
@@ -61,18 +84,11 @@ std::string get_absolute_executable_path(std::string programPath)
                 count++;
             }
 
-            std::cout << "Count: " << count << std::endl;
-
             // Remove the last count amount of directories from the path
             for (int i = 0; i < count; i++)
             {
                 executablePath.erase(executablePath.find_last_of("/"), executablePath.length());
             }
-
-            std::cout << "Executable path: " << executablePath << std::endl;
-
-            std::cout << "Error: Invalid path" << std::endl;
-            exit(1);
         }
     }
 
@@ -89,6 +105,7 @@ std::string get_args(json program)
 {
     std::string args = "";
 
+    // Iterate through the arguments array, and add them to the args string
     for (auto &arg : program["args"])
     {
         args.append(arg);
@@ -106,15 +123,9 @@ std::string get_args(json program)
  */
 std::string make_command(json program)
 {
-    std::string runDirectory = program["runDirectory"];
     std::string command = "cd ";
 
-    if (runDirectory == "")
-    {
-        runDirectory = "./";
-    }
-
-    command.append(runDirectory);
+    command.append(get_run_directory(program));
     command.append(" && ");
 
     std::string programPath = program["path"];
