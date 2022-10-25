@@ -56,6 +56,19 @@ std::string get_executable_path(std::string programPath)
     return executablePath;
 }
 
+std::string get_args(json program)
+{
+    std::string args = "";
+
+    for (auto &arg : program["args"])
+    {
+        args.append(arg);
+        args.append(" ");
+    }
+
+    return args;
+}
+
 std::string make_command(json program)
 {
     std::string runDirectory = program["runDirectory"];
@@ -99,7 +112,8 @@ std::string make_command(json program)
     }
 
     command.append(get_executable_path(program["path"]));
-    // command.append(program["args"]);
+    command.append(" ");
+    command.append(get_args(program));
 
     std::cout << command << std::endl;
 
